@@ -116,6 +116,18 @@ public class HeroDaoImpl implements HeroDao {
         }catch (Sql2oException ex){
             logger.error("*** There was an error clearing heroes", ex);
         }
+    }
 
+    @Override
+    public void deleteHeroById(int id) {
+        String sql ="DELETE FROM heroes\n" +
+                "WHERE hero_id = :id";
+        try(Connection con = db.open()){
+            con.createQuery(sql)
+                    .addParameter("id",id)
+                    .executeUpdate();
+        }catch (Sql2oException ex){
+            logger.error("*** There was an error deleting hero", ex);
+        }
     }
 }

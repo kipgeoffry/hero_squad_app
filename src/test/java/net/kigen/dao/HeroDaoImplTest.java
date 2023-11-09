@@ -70,7 +70,7 @@ public class HeroDaoImplTest {
         Hero hero = setupNewHero();
         heroDao.addHero(hero);
         Hero foundHero =heroDao.findHeroById(hero.getId());
-        assertTrue(hero.getName().equals(foundHero.getName()));
+        assertEquals(hero.getName(), foundHero.getName());
     }
 
     @Test
@@ -84,7 +84,6 @@ public class HeroDaoImplTest {
         int heroes = heroDao.getAllHeroes().size();
         assertEquals(3,heroes);
     }
-
     @Test
     public void deletesAllHeroes() {
         Hero hero = setupNewHero();
@@ -92,7 +91,14 @@ public class HeroDaoImplTest {
         heroDao.clearAllHeroes();
         int heroes = heroDao.getAllHeroes().size();
         assertNotEquals(1,heroes);
+    }
 
+    @Test
+    public void existingHeroCanBeDeletedById() {
+        Hero hero = setupNewHero();
+        heroDao.addHero(hero);
+        heroDao.deleteHeroById(hero.getId());
+        assertEquals(0,heroDao.getAllHeroes().size());
     }
 
     //define the following once and then call it as above in your tests.
