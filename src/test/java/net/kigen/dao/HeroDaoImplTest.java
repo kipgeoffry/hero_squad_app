@@ -33,10 +33,9 @@ public class HeroDaoImplTest {
         conn = db.open();      // open connection once before this test file is run
     }
     @After // run after every test
-    public void tearDown() throws Exception { //I have changed
+    public void tearDown() throws Exception {
         logger.info("** clearing database **");
-//        categoryDao.clearAllCategories(); // clear all categories after every test
-//        taskDao.clearAllTasks(); // clear all tasks after every test
+        heroDao.clearAllHeroes(); // clear all Heroes after every test
     }
     @AfterClass //
     public static void shutDown() throws Exception{
@@ -84,6 +83,15 @@ public class HeroDaoImplTest {
         heroDao.addHero(hero3);
         int heroes = heroDao.getAllHeroes().size();
         assertEquals(3,heroes);
+    }
+
+    @Test
+    public void deletesAllHeroes() {
+        Hero hero = setupNewHero();
+        heroDao.addHero(hero);
+        heroDao.clearAllHeroes();
+        int heroes = heroDao.getAllHeroes().size();
+        assertNotEquals(1,heroes);
 
     }
 
