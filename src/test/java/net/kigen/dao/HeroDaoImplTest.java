@@ -54,24 +54,37 @@ public class HeroDaoImplTest {
     }
 
     @Test
-    public void addingWeaknessReturnsId() {
+    public void addingWeaknessReturnsId() throws Exception{
         Hero hero = setupNewHero();
         int id = heroDao.addWeakness(hero.getWeakness());
         assertNotEquals(0,id);
     }
     @Test
-    public void addingPowerReturnsId() {
+    public void addingPowerReturnsId() throws Exception {
         Hero hero = setupNewHero();
         int id = heroDao.addPower(hero.getPower(),0);
         assertNotEquals(0,id);
     }
 
     @Test
-    public void findingHeroByIdReturnsHero() {
+    public void existingHeroCanBeFoundById() throws Exception {
         Hero hero = setupNewHero();
         heroDao.addHero(hero);
-        Hero foundHero =heroDao.findById(hero.getId());
+        Hero foundHero =heroDao.findHeroById(hero.getId());
         assertTrue(hero.getName().equals(foundHero.getName()));
+    }
+
+    @Test
+    public void addedHeroesCanBeReturned() throws Exception{
+        Hero hero1 = setupNewHero();
+        Hero hero2 = new Hero("Micah Maritim",60,"Womaniser","Talented Singer");
+        Hero hero3 = new Hero("Junior Kotestes",35,"Uncontrolled spender","Comedian");
+        heroDao.addHero(hero1);
+        heroDao.addHero(hero2);
+        heroDao.addHero(hero3);
+        int heroes = heroDao.getAllHeroes().size();
+        assertEquals(3,heroes);
+
     }
 
     //define the following once and then call it as above in your tests.

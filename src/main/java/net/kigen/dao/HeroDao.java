@@ -10,11 +10,11 @@ public interface HeroDao {
     int addPower(String power,int points);
 
     // LIST
-//    List<Hero> getAll();
+    List<Hero> getAllHeroes();
    // CREATE
     void addHero(Hero hero);
 //    // READ
-    Hero findById(int id);
+    Hero findHeroById(int id);
 
 //    //UPDATE
 //    void update(int id, String name, int age, String weakness, String power);

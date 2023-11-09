@@ -9,6 +9,7 @@ import org.sql2o.Sql2oException;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class HeroDaoImpl implements HeroDao {
     private static final Logger logger = LoggerFactory.getLogger(HeroDaoImpl.class);
@@ -54,7 +55,7 @@ public class HeroDaoImpl implements HeroDao {
     }
 
     @Override
-    public Hero findById(int id) {
+    public Hero findHeroById(int id) {
         String sql = "SELECT hero_id as id,hero_name as name,age,wk.weakness as weakness,pw.power_name as power, h.created_at as createdAt \n" +
                 "FROM heroes h\n" +
                 "INNER JOIN weaknesses wk ON h.weakness_id = wk.weakness_id\n" +
@@ -66,6 +67,21 @@ public class HeroDaoImpl implements HeroDao {
                             .executeAndFetchFirst(Hero.class);
         }catch (Sql2oException ex){
             logger.error("*** There was an error fetching a hero", ex);
+        }
+        return null;
+    }
+
+    @Override
+    public List<Hero> getAllHeroes() {
+        String sql = "SELECT hero_id as id,hero_name as name,age,wk.weakness as weakness,pw.power_name as power, h.created_at as createdAt\n" +
+                "FROM heroes h\n" +
+                "INNER JOIN weaknesses wk ON h.weakness_id = wk.weakness_id\n" +
+                "INNER JOIN powers pw ON h.power_id = pw.power_id";
+        try(Connection con = db.open()){
+            return con.createQuery(sql)
+                    .executeAndFetch(Hero.class);
+        }catch (Sql2oException ex){
+            logger.error("*** There was an error fetching heroes", ex);
         }
         return null;
     }
@@ -88,10 +104,6 @@ public class HeroDaoImpl implements HeroDao {
         }catch (Sql2oException ex){
             logger.error("*** There was an error adding hero", ex);
         }
-
-
-
-
 
     }
 }
