@@ -17,10 +17,7 @@ public class Hero {
         this.weakness = weakness;
         this.power = power;
         this.createdAt = LocalDateTime.now();
-
     }
-
-
     public int getId() {
         return id;
     }
@@ -81,7 +78,6 @@ public class Hero {
     public int hashCode() {
         return Objects.hash(id, name, age, weakness, power, createdAt);
     }
-
 
 }
 

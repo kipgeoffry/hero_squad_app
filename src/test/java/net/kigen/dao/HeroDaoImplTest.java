@@ -48,7 +48,7 @@ public class HeroDaoImplTest {
     public void addingHeroSetsId() throws Exception {
         Hero hero = setupNewHero();
         int originalId = hero.getId();
-        heroDao.add(hero);
+        heroDao.addHero(hero);
         int idFromDb = hero.getId();
         assertNotEquals(originalId,idFromDb);
 

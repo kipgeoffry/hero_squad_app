@@ -2,14 +2,18 @@ package net.kigen.dao;
 
 import net.kigen.models.Hero;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface HeroDao {
+    int addWeakness(String weakness);
+    int addPower(String power,int points);
+
     // LIST
 //    List<Hero> getAll();
 //
 //    // CREATE
-    void add(Hero hero);
+    void addHero(Hero hero);
 //
 //    // READ
 //    Hero findById(int id);
@@ -21,6 +25,7 @@ public interface HeroDao {
 //    void deleteById(int id);
 //    void clearAllHeroes();
 //
+
 
 
 }
