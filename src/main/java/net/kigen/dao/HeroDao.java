@@ -11,13 +11,11 @@ public interface HeroDao {
 
     // LIST
 //    List<Hero> getAll();
-//
-//    // CREATE
+   // CREATE
     void addHero(Hero hero);
-//
 //    // READ
-//    Hero findById(int id);
-//
+    Hero findById(int id);
+
 //    //UPDATE
 //    void update(int id, String name, int age, String weakness, String power);
 //

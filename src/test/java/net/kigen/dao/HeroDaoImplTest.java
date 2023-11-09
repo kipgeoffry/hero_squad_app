@@ -66,6 +66,14 @@ public class HeroDaoImplTest {
         assertNotEquals(0,id);
     }
 
+    @Test
+    public void findingHeroByIdReturnsHero() {
+        Hero hero = setupNewHero();
+        heroDao.addHero(hero);
+        Hero foundHero =heroDao.findById(hero.getId());
+        assertTrue(hero.getName().equals(foundHero.getName()));
+    }
+
     //define the following once and then call it as above in your tests.
     public Hero setupNewHero(){
         return new Hero("Kiptindinyo",30,"Alcoholism","Super Farmer");

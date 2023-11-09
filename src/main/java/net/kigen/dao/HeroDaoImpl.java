@@ -24,13 +24,13 @@ public class HeroDaoImpl implements HeroDao {
         int id = 0;
         try(Connection con = db.open()){
              id= ((BigInteger)
-                    con.createQuery(sql)
-                    .addParameter("weakness",weakness)
-                    .addParameter("created_at",LocalDateTime.now())
-                    .executeUpdate()
-                    .getKey()).intValue();
+                     con.createQuery(sql,true)
+                             .addParameter("weakness",weakness)
+                             .addParameter("created_at",LocalDateTime.now())
+                             .executeUpdate()
+                             .getKey()).intValue();
         }catch (Sql2oException ex){
-            logger.error("*** There was an error adding weakness");
+            logger.error("*** There was an error adding weakness", ex);
         }
         return id;
     }
@@ -41,16 +41,33 @@ public class HeroDaoImpl implements HeroDao {
         int id = 0;
         try(Connection con = db.open()){
             id= ((BigInteger)
-                    con.createQuery(sql)
+                    con.createQuery(sql,true)
                             .addParameter("power_name",power)
                             .addParameter("points",points)
                             .addParameter("created_at",LocalDateTime.now())
                             .executeUpdate()
                             .getKey()).intValue();
         }catch (Sql2oException ex){
-            logger.error("*** There was an error adding power");
+            logger.error("*** There was an error adding power", ex);
         }
         return id;
+    }
+
+    @Override
+    public Hero findById(int id) {
+        String sql = "SELECT hero_id as id,hero_name as name,age,wk.weakness as weakness,pw.power_name as power, h.created_at as createdAt \n" +
+                "FROM heroes h\n" +
+                "INNER JOIN weaknesses wk ON h.weakness_id = wk.weakness_id\n" +
+                "INNER JOIN powers pw ON h.power_id = pw.power_id\n" +
+                "WHERE h.hero_id = :id";
+        try(Connection con = db.open()){
+                    return con.createQuery(sql)
+                            .addParameter("id",id)
+                            .executeAndFetchFirst(Hero.class);
+        }catch (Sql2oException ex){
+            logger.error("*** There was an error fetching a hero", ex);
+        }
+        return null;
     }
 
     @Override
@@ -69,9 +86,10 @@ public class HeroDaoImpl implements HeroDao {
                     .getKey()).intValue();
            hero.setId(id);
         }catch (Sql2oException ex){
-            logger.error("*** There was an error adding hero");
-            System.out.println(ex);
+            logger.error("*** There was an error adding hero", ex);
         }
+
+
 
 
 
