@@ -21,7 +21,7 @@ public class HeroDaoImplTest {
     @BeforeClass  //(run once before running any tests in this file)
     public static void setUp() throws Exception {
         logger.info("*** Setting up database for Testing ***");
-        Sql2o db = new Sql2o("jdbc:mysql://192.168.10.93:3360/hero_squad" ,"demouser", "pw123456");
+        Sql2o db = new Sql2o("jdbc:mysql://192.168.10.93:3360/hero_squad_test" ,"demouser", "pw123456");
         try(Connection con = db.open()){
             logger.info("*** Test Database connection Success ");
         }catch (Sql2oException ex){
@@ -51,7 +51,19 @@ public class HeroDaoImplTest {
         heroDao.addHero(hero);
         int idFromDb = hero.getId();
         assertNotEquals(originalId,idFromDb);
+    }
 
+    @Test
+    public void addingWeaknessReturnsId() {
+        Hero hero = setupNewHero();
+        int id = heroDao.addWeakness(hero.getWeakness());
+        assertNotEquals(0,id);
+    }
+    @Test
+    public void addingPowerReturnsId() {
+        Hero hero = setupNewHero();
+        int id = heroDao.addPower(hero.getPower(),0);
+        assertNotEquals(0,id);
     }
 
     //define the following once and then call it as above in your tests.
